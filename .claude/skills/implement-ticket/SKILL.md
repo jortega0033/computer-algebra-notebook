@@ -12,17 +12,17 @@ The project subagents in `.claude/agents/` are part of the work. Delegate to the
 
 ## Steps
 
-1. **Read the ticket.** `gh issue view <number>` and the epic it belongs to. Check that every prerequisite issue is closed and that no owner decision named in the ticket is still open. If the ticket is blocked, stop and say what blocks it.
+1. **Read the ticket.** `gh issue view <number>` and the epic it belongs to. If the issue is a `tracking` parent, stop: only leaf sub-issues are implemented. Check that every prerequisite issue is closed and that no owner decision named in the ticket is still open. If the ticket is blocked, stop and say what blocks it.
 2. **Read the rules.** `CLAUDE.md`, then the architecture notes it links to.
 3. **Orient and check the approach.** For a ticket that touches the UI, run the `ui-ux-pro-max` skill first (design-system search for the product type, `python .claude/skills/ui-ux-pro-max/scripts/search.py`) and read `docs/ui-quality.md`. Delegate as the table "Before coding" says. Settle open design questions before writing code.
 4. **Branch** as the Git workflow in `CLAUDE.md` says: a worktree inside the project (`.claude/worktrees/<issue number>`), entered with `cd`, and every later command run from there. Check `git branch --show-current` prints the ticket branch. Never work on the default branch and never use a worktree outside the project folder (the gate hook reads the working directory and would see clean `main`).
 5. **Implement** inside the ticket's stated scope. Delegate the work to the implementing role that matches the files being changed (table "While coding"). Do not widen scope; note anything else you find as a follow-up.
 6. **Test.** Add or change tests for every acceptance criterion and material edge case, then run the checks listed in `CLAUDE.md`. Record each command and its result.
 7. **Specialist review.** Run every role in the table "After coding" whose trigger matches the change. For a UI change, check every changed screen against `docs/ui-quality.md` and record the result. Run the `unslop` skill on user-facing copy, documentation and the pull request text.
-8. **Review gate, always.** Local checks must have passed first, with their output recorded. Run Code Reviewer on the full diff and that evidence. Fix every material finding, re-run the checks, and have the reviewer look again until no material finding is left.
+8. **Review gate, always.** Local checks must have passed first, with their output recorded. Reviewers have no shell: write the diff and the evidence to `.claude/state/review/` in the ticket worktree (`git diff --stat origin/main...HEAD`, `git diff origin/main...HEAD`, the check outputs) and name those files in the request. Run Code Reviewer on the full diff and that evidence. Fix every material finding, re-run the checks, and have the reviewer look again until no material finding is left.
 9. **Acceptance gate, always.** Run Reality Checker with the ticket's acceptance criteria and the evidence you produced. It checks that the documented checks were run locally and passed and that CI is configured to run them; it does not need a CI result. Do not call the ticket done unless it passes.
-10. **Draft pull request.** Only after both gates passed, capture the evidence `CLAUDE.md` asks for and run `gh pr create --draft` with the template in `.github/pull_request_template.md`, naming the issue and adding a line to `CHANGELOG.md`. The gate hook blocks this until both gates ran after the last code edit.
-11. **CI.** CI runs on the draft pull request. If it fails, fix, re-run the local checks and both gates, and push. Compare a failure with the latest run on `main` and say whether the change could have caused it.
+10. **Draft pull request.** Only after both gates passed, capture the evidence `CLAUDE.md` asks for and run `gh pr create --draft` with the template in `.github/pull_request_template.md`, naming the issue and adding a line to `CHANGELOG.md`. If this is the last open sub-issue of a parent, write `Closes #<sub-issue>` and `Closes #<parent>`. List acceptance steps that need a person (marked manual in the ticket) under "Owner checks" after doing everything an agent can. The gate hook blocks this until both gates ran after the last code edit.
+11. **CI.** CI runs on the draft pull request. Do not poll: end the turn with the line "Draft pull request #N is waiting for CI" and read `gh pr checks <n>` once when woken. If it fails, fix, re-run the local checks and both gates, and push. Compare a failure with the latest run on `main` and say whether the change could have caused it.
 12. **Ready.** When CI is green, run `gh pr ready` (the hook checks the gates again) and comment on the issue with the CI run link. Do not merge: only the owner merges.
 
 ## Roles
@@ -57,6 +57,7 @@ The project subagents in `.claude/agents/` are part of the work. Delegate to the
 
 ## Rules
 
+- Do not change agent configuration (`.claude/agents`, `skills`, `hooks`, `settings.json`) in a ticket; shell edits are not covered by the `ask` rules.
 - The session or role that wrote a change does not count as its reviewer.
 - Read-only reviewers cannot run commands. Give them the diff, the acceptance criteria and the recorded command output.
 - Where a role's general advice (frameworks, dependencies, cloud services) conflicts with `CLAUDE.md`, `CLAUDE.md` wins.

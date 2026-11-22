@@ -25,6 +25,10 @@ CI run: <!-- link, filled in before the pull request is marked ready -->
 | Code Reviewer | | |
 | Reality Checker | | |
 
+## Owner checks
+
+<!-- Acceptance steps the ticket marks as manual (a person must do them). Everything an agent could do is above. Write "none" if there are none. -->
+
 ## Risks and rollback
 
 <!-- What could break, and how to undo this change (usually: revert the merge commit). -->
