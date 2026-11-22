@@ -53,8 +53,11 @@ Fetch the same paths at a newer revision, re-apply the `tools:` line to the five
 
 ## Local change: automatic delegation (2026-11-22)
 
-One sentence beginning "Use proactively" was appended to the `description:` line of every Agency Agents role in `.claude/agents/` (not to `loop-verifier`). Claude Code uses that field to decide when to delegate, so the roles now run during ticket work without being named. Nothing else in the role files changed.
+One sentence beginning "Use proactively" was appended to the `description:` line of every Agency Agents role in `.claude/agents/` (not to `loop-verifier`). Claude Code uses that field to decide when to delegate, so the roles now run during ticket work without being named. 
+A section headed "In this repository" was then inserted directly after the frontmatter of every Agency Agents role (not into `loop-verifier`), before the upstream text. It is project-specific text written for this repository, not upstream text: the planned stack and hard rules, the planned files the role owns or reviews, the planned commands (each marked as planned until ticket #2 merges), a checklist with its sources, the parts of the generic text that do not apply here, and what the role hands back. It ends with the sentence "This section and CLAUDE.md override the generic text below wherever they differ." Because there is no code yet, every file, module and command it names is a plan and must be corrected by the first ticket that makes it real.
 
-This supersedes any statement above that a role file is unmodified or that the `tools:` line is the only local change. To compare a role with the pinned upstream file, remove that sentence (and the `tools:` line where one was added) first.
+This supersedes any statement above that a role file is unmodified or that the `tools:` line is the only local change. To compare a role with the pinned upstream file, remove the "Use proactively" sentence (in Backend Architect, Frontend Developer, API Tester and Reality Checker also the full stop that was added in front of it, because the upstream description has none), the section "In this repository" together with the blank line after it, and the `tools:` line where one was added; the result should have the upstream SHA-256 listed in the table above.
 
 The steps at which each role runs are in `.claude/skills/implement-ticket/SKILL.md`.
+
+Checked on 2026-11-22: with the three removals above, each of the eight files has the upstream SHA-256 listed in the table. Not checked: that Claude Code loads the roles (the headless `claude -p` listing was not run for this repository yet).

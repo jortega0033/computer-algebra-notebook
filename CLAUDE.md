@@ -89,11 +89,11 @@ When asked to implement, continue or finish a GitHub issue, follow the playbook 
 
 Delegate to the project subagents in `.claude/agents/` without waiting to be asked:
 
-- **Before coding:** Software Architect, as their descriptions say.
+- **Before coding:** Software Architect, as its description says.
 - **While coding:** the implementing role that matches the files being changed.
 - **After coding:** each specialist reviewer whose trigger matches the change.
 - **On every ticket, before it is called done:** Code Reviewer, then Reality Checker.
 - The session that wrote a change does not count as its reviewer.
 - List the roles that ran and their verdicts in the pull request description under "Agent roles run".
 
-Each role's `description` ends with a "Use proactively ..." sentence, which is what makes Claude Code delegate to it without being told.
+Each role's `description` ends with a "Use proactively ..." sentence, which is what makes Claude Code delegate to it without being told. Each role file starts with a section "In this repository" written for this project (stack, planned files, commands, checklist, what does not apply); that section and this file override the generic upstream text below it. The five reviewer roles (Software Architect, Application Security Engineer, Accessibility Auditor, Code Reviewer, Reality Checker) are limited to `Read, Grep, Glob`, so the caller gives them the diff, the acceptance criteria and the recorded command output. Role provenance is in [`.claude/agency-agents/README.md`](.claude/agency-agents/README.md).
