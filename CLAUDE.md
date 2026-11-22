@@ -76,7 +76,7 @@ Say "done" only after all of these exist, and put them in the pull request:
 
 1. Every acceptance criterion of the ticket, each tied to a test name or a recorded manual step.
 2. The exact commands you ran (at least `python -m unittest` once it exists) and their observed output. Never report a result you did not see.
-3. For any UI change, a manual run in Chrome of the documented flow with what you saw (typed input, visible result, excluded values, errors), plus the keyboard path for any new control.
+3. For any UI change, the documented Chrome flow: what an agent could run itself (HTTP-level tests, a scripted or headless run) with its observed output (typed input, visible result, excluded values, errors), and the steps the ticket marks as manual listed under "Owner checks" in the pull request. Keep the keyboard path for any new control.
 4. For a fixture from the technical spec, the value the implementation printed next to the expected one.
 5. Code Reviewer, then Reality Checker, on the full diff and the recorded evidence, with their verdicts. Reality Checker checks that the documented checks were run and passed and that CI is configured to run them.
 6. CI green on the pull request, which is opened as a draft after the gates, before it is marked ready for review.
@@ -106,7 +106,7 @@ Each role's `description` ends with a "Use proactively ..." sentence, which is w
 - **Review gate hook:** [`.claude/hooks/role_gate.py`](.claude/hooks/role_gate.py) blocks `gh pr create` and `gh pr ready` until both gate roles ran after the last code edit (documentation-only changes pass). `ROLE_GATE=off` in the environment Claude Code is started from switches it off for that session; only the owner does that.
 - **Permissions:** [`.claude/settings.json`](.claude/settings.json). Documented commands are allowed; force pushes, pushes to `main`, `gh pr merge`, releases and reads of `.env` are denied; edits to CI, agent configuration and Loop files ask first (anchored rules for the root and any-depth rules `**/.claude/...` so copies inside a ticket worktree ask too; edits made through a shell are not covered, so a ticket must not change agent configuration).
 - **CI:** [`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs `python -m unittest` and the gate self-test on Linux and Windows with Python 3.12 and 3.13. Until ticket #2 creates `algebra_notebook/__main__.py`, a temporary guard skips the test command; ticket #2 removes it. Every required check must be green before a pull request is marked ready.
-- **Templates and labels:** [pull request template](.github/pull_request_template.md), [ticket template](.github/ISSUE_TEMPLATE/implementation-ticket.md). Ticket labels: `status:ready`, `status:blocked`, `status:in-progress`, `needs-decision`.
+- **Templates and labels:** [pull request template](.github/pull_request_template.md), [ticket template](.github/ISSUE_TEMPLATE/implementation-ticket.md). Ticket labels: `status:ready`, `status:blocked`, `status:in-progress`, `needs-decision`, `tracking` (a parent with sub-issues; never picked).
 - **Changelog:** every ticket pull request adds a line under `Unreleased` in [CHANGELOG.md](CHANGELOG.md).
 - **UI and writing quality:** [docs/ui-quality.md](docs/ui-quality.md) (ten binding rules); skills `ui-ux-pro-max` and `unslop` in `.claude/skills/`.
 - **Decisions:** [docs/owner-decisions.md](docs/owner-decisions.md) records what the owner decided. An agent that finds a decision blocking a ticket stops and says so.
