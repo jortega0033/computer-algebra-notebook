@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: test (${{ matrix.os }}, python ${{ matrix.python }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ["3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: ${{ matrix.python }}
+      # TEMPORARY GUARD: the repository has no application code yet, so the
+      # documented test command has nothing to run. Ticket #2 (walking
+      # skeleton) creates algebra_notebook/__main__.py and removes this guard.
+      - name: Run the test suite (python -m unittest)
+        if: ${{ hashFiles('algebra_notebook/__main__.py') != '' }}
+        run: python -m unittest
+      - name: Review gate self-test
+        run: python .claude/hooks/role_gate.py --self-test
