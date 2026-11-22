@@ -1,0 +1,8 @@
+version: 2
+updates:
+  # Only GitHub Actions: the runtime is the Python standard library and the
+  # technical spec plans no third-party Python package.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly

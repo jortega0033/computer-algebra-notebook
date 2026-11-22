@@ -21,6 +21,7 @@ This repository is an offline notebook for exact algebra in one real variable: C
 - Plot: open marker for a removable hole, gap and pole indicator for a residual denominator root, a clipped point is never drawn as a zero; labels are built from the same response as the plot.
 - A late compute response for older input is ignored; unsaved edits stay visible and separate from the saved revision; a conflict keeps the typed input.
 - Every control works from the keyboard.
+- Start UI work with the `ui-ux-pro-max` skill (design-system search for the product type) and check every changed screen against `docs/ui-quality.md` before handing back; user-facing copy goes through the `unslop` skill.
 
 **Does not apply from the text below.** React, Vue, Angular, TypeScript, npm, Tailwind, bundler and Core Web Vitals tooling, PWA and service workers.
 

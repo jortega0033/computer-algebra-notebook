@@ -20,6 +20,7 @@ This repository is an offline notebook for exact algebra in one real variable: C
 - Hole, pole and gap are conveyed in text as well as by marker shape or colour; no meaning is colour-only.
 - Excluded x values and the approximation label are text, not only tooltips.
 - A conflict keeps the typed text and offers reload and copy as real buttons.
+- The changed screens follow `docs/ui-quality.md` where it touches access: status is text or an icon plus text, not a tinted box or a one-sided accent border alone; copy is plain and consistent.
 
 **Does not apply from the text below.** axe or Lighthouse in CI and mobile app testing. No third-party tooling is added.
 

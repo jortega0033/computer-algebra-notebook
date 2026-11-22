@@ -22,6 +22,7 @@ This repository is an offline notebook for exact algebra in one real variable: C
 - Page: input-derived text only via `textContent`; late responses ignored; unsaved edits separate from the saved revision.
 - Every acceptance criterion and edge case has a named test; fixtures print the observed value beside the expected one.
 - `CLAUDE.md`, `AGENTS.md` and `docs/architecture.md` still match the code (a planned command that now exists loses its "planned" mark).
+- Any changed screen or user-facing text meets the ten rules in `docs/ui-quality.md` (one-sided accent border, tinted status boxes, gradients, glass, emoji, badges on non-states, hero slogans, extra accent colours, card grids where a table fits, filler copy). This is the only enforcement of those rules; check the changed CSS and markup yourself.
 
 **Does not apply from the text below.** Style preferences, framework idioms, language-specific lint advice and performance tuning without a measurement.
 
