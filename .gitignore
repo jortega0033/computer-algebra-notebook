@@ -12,3 +12,5 @@ dist/
 *.db
 .DS_Store
 .claude/state/
+.claude/worktrees/
+notebook-data/

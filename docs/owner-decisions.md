@@ -10,7 +10,7 @@ All entries are dated 2026-11-22.
 | 2 | Persona agents run automatically during ticket work and carry instructions tailored to this project. | `.claude/agents/*.md` ("Use proactively" in each `description`, section "In this repository"), [`implement-ticket`](../.claude/skills/implement-ticket/SKILL.md) |
 | 3 | Every open ticket is about app implementation. Tooling is installed, not ticketed. | Epic #1 and its children; the one CI guard removal sits inside ticket #2 |
 | 4 | Agents may take a ticket up to a ready pull request. Only the owner merges and releases. | `CLAUDE.md` (Git workflow, Delivery workflow), [`next-ticket`](../.claude/skills/next-ticket/SKILL.md), `.claude/settings.json` (`gh pr merge` and releases denied), [`RELEASING.md`](RELEASING.md) |
-| 5 | No scheduler. Ticket work starts only on the owner's go signal (`/next-ticket`), because the repository is used to train AI models. | `next-ticket` (`disable-model-invocation: true`), `LOOP.md` |
+| 5 | No scheduler. Ticket work starts only on the owner's go signal, because the repository is used to train AI models. `/next-ticket` is the normal entry (it claims the ticket and sets the labels); `implement-ticket` can also start from a direct user request, but then claiming and labelling the issue is up to the user. | `next-ticket` (`disable-model-invocation: true`), `LOOP.md` |
 | 6 | A review gate hook blocks opening or readying a pull request until the gate roles (Code Reviewer, Reality Checker) have run after the last code edit. | `.claude/hooks/role_gate.py` and the hooks in `.claude/settings.json`; switch it off for a session with `ROLE_GATE=off` in the environment Claude Code is started from |
 | 7 | Loop Engineering stays at L1, report-only and unscheduled. | `LOOP.md`, `loop-constraints.md` |
 | 8 | Continuous integration runs on Linux and Windows; the default branch requires a pull request and green checks. | `.github/workflows/ci.yml`; branch protection is set on GitHub by the orchestrator after the merge |
@@ -21,17 +21,17 @@ All entries are dated 2026-11-22.
 
 ## Entry 10: decisions settled with the ticket default
 
-Recorded in epic [#1](https://github.com/jortega0033/computer-algebra-notebook/issues/1) ("Open owner decisions"); each applies to the tickets that name it.
+This page is the record. The ticket plan copies the list into the "Open owner decisions" section of epic [#1](https://github.com/jortega0033/computer-algebra-notebook/issues/1) when it is applied to GitHub; until then the live epic body still has the older text. "E21-7" and "E21-9" are plan IDs of tickets whose issue numbers GitHub assigns when they are created.
 
-| Id | Question | Default taken |
-|---|---|---|
-| D1 | Minimum Python | 3.12 (CPython; CI runs 3.12 and 3.13) |
-| D2 | Browser target and browser verification | Current stable Chrome; verified by a documented manual flow plus HTTP-level tests; no browser automation dependency |
-| D3 | SQLite transaction strategy | One short connection per write, `BEGIN IMMEDIATE`, head compare and revision insert in one transaction, default rollback journal, `synchronous=FULL`, `PRAGMA user_version` as schema version |
-| D4 | Package and module names | `algebra_notebook` with the layout in `docs/architecture.md` |
-| D5 | Meaning of "localized errors" | Located at the input span, in English; no translation |
-| D6 | Optional SymPy cross-check | Not included in this batch; the hand-calculated fixtures are the oracle |
-| D7 | Persist derived results | No; recompute on reopen |
-| D8 | Diagnostic class of caps and unsupported forms | `limit` for exponent above 12, node cap and similar; `unsupported` for irrational quadratic roots and non-affine divisors; `domain` for division by constant zero |
-| D9 | Writes without an Origin header | Rejected |
-| D10 | Licence | Not selected; no ticket adds a licence file; the owner decides separately and it blocks no ticket |
+| Id | Question | Default taken | Applies to |
+|---|---|---|---|
+| D1 | Minimum Python | 3.12 (CPython; CI runs 3.12 and 3.13) | #2 |
+| D2 | Browser target and browser verification | Current stable Chrome; verified by a documented manual flow plus HTTP-level tests; no browser automation dependency | #2, #7 |
+| D3 | SQLite transaction strategy | One short connection per write, `BEGIN IMMEDIATE`, head compare and revision insert in one transaction, default rollback journal, `synchronous=FULL`, `PRAGMA user_version` as schema version | #2, #6 |
+| D4 | Package and module names | `algebra_notebook` with the layout in `docs/architecture.md` | #2 |
+| D5 | Meaning of "localized errors" | Located at the input span, in English; no translation | #2, E21-7 |
+| D6 | Optional SymPy cross-check | Not included in this batch; the hand-calculated fixtures are the oracle | #7 (recorded as not run) |
+| D7 | Persist derived results | No; recompute on reopen | #6 |
+| D8 | Diagnostic class of caps and unsupported forms | `limit` for exponent above 12, node cap and similar; `unsupported` for irrational quadratic roots and non-affine divisors; `domain` for division by constant zero | E21-7, #3, #4 |
+| D9 | Writes without an Origin header | Rejected | #2, E21-9 |
+| D10 | Licence | Not selected; no ticket adds a licence file; the owner decides separately and it blocks no ticket | none (blocks no ticket) |

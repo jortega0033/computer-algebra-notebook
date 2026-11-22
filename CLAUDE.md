@@ -48,7 +48,7 @@ There is no lint, format or build step. Do not add one without an owner decision
 Dependencies point downward only; a lower module never imports a higher one.
 
 1. `service` (HTTP, request guards, static files) and `static/` (browser UI) are the only layers that touch the network or the page.
-2. `operations` (simplify, evaluate, differentiate, solve, plot sampling) take a typed tree and return a structured result or one diagnostic.
+2. `operations` (simplify, evaluate, differentiate, solve, and the plot operation) and `plotting` (exact-grid sampling, discontinuity classes, series, which `operations` calls) take a typed tree and return a structured result or one diagnostic.
 3. `algebra` (rational polynomials, reduced rational expressions, excluded-value set, canonical formatting) is pure and exact.
 4. `parser` (tokens, grammar, typed tree, spans, limits) is pure and does no algebra.
 5. `store` (notebooks, cells, revisions, compare-and-set head) knows nothing about algebra.
@@ -57,7 +57,7 @@ Invariants that apply to every ticket:
 
 - Exact until display: floats appear only for plot coordinates, after exact evaluation, with non-finite values guarded.
 - The excluded x values always travel with a result. Cancelling a common factor never drops an exclusion.
-- Failure is a typed diagnostic with a class (syntax, unsupported, domain, limit), a message and an input span. No stack trace reaches a response or the page.
+- Failure is a typed diagnostic with a class (syntax, unsupported, domain, limit), a message and, when the failure comes from the input text, an input span. Request-level failures (rejected Host or Origin, malformed JSON, oversized body, unknown route) carry a class and message but no span. No stack trace reaches a response or the page.
 - Limits are checked before allocation where practical.
 - A save names the revision it is based on. A stale save returns a conflict and changes nothing.
 - Output is canonical and deterministic: reduced fractions, positive denominators, stable ordering.
@@ -65,7 +65,7 @@ Invariants that apply to every ticket:
 ## Git workflow
 
 - `main` is the default branch and is protected. Never commit to it and never force-push.
-- One ticket, one branch, one pull request. Branch name `ticket-<issue number>-<short-slug>`, created from an up-to-date `main`.
+- One ticket, one branch, one pull request. Branch name `ticket-<issue number>-<short-slug>`, created from an up-to-date `main` in a worktree inside the project: `git worktree add .claude/worktrees/<issue number> -b <branch> origin/main`, then `cd` into it and run every later command, including `gh pr create` and `gh pr ready`, from there. A worktree outside the project folder is not allowed: the session working directory would stay on clean `main` and the gate hook would not see the changed files.
 - Small commits in English, imperative mood. Do not commit `.env`, a notebook data directory or any `*.sqlite*`/`*.db` file.
 - The pull request body starts with `Closes #<number>` and lists the evidence below. Agents open pull requests; only the owner merges.
 - Do not publish, tag, release or deploy.
@@ -101,7 +101,7 @@ Each role's `description` ends with a "Use proactively ..." sentence, which is w
 
 ## Delivery workflow
 
-- **Start:** the owner runs `/next-ticket` (driver: [`.claude/skills/next-ticket/SKILL.md`](.claude/skills/next-ticket/SKILL.md)); there is no scheduler and nothing starts ticket work by itself. The playbook is [`implement-ticket`](.claude/skills/implement-ticket/SKILL.md).
+- **Start:** the owner runs `/next-ticket`, the normal entry that claims the ticket and sets its labels (driver: [`.claude/skills/next-ticket/SKILL.md`](.claude/skills/next-ticket/SKILL.md)); there is no scheduler and nothing starts ticket work by itself. The playbook is [`implement-ticket`](.claude/skills/implement-ticket/SKILL.md).
 - **Order:** local checks, then Code Reviewer and Reality Checker, then `gh pr create --draft`, then CI on the draft, then `gh pr ready` once CI is green and a comment on the issue with the CI run link.
 - **Review gate hook:** [`.claude/hooks/role_gate.py`](.claude/hooks/role_gate.py) blocks `gh pr create` and `gh pr ready` until both gate roles ran after the last code edit (documentation-only changes pass). `ROLE_GATE=off` in the environment Claude Code is started from switches it off for that session; only the owner does that.
 - **Permissions:** [`.claude/settings.json`](.claude/settings.json). Documented commands are allowed; force pushes, pushes to `main`, `gh pr merge`, releases and reads of `.env` are denied; edits to CI, agent configuration and Loop files ask first.
