@@ -2,7 +2,7 @@
 
 A dated record of the decisions the owner made for this repository, so the rules do not depend on anyone's memory of a conversation. Changing any entry needs the owner. An agent that finds a decision blocking a ticket stops and says so.
 
-Entries 1 to 12 are dated 2026-11-22; entry 13 is dated 2026-11-23.
+Entries 1 to 12 are dated 2026-11-22; entries 13 and 14 are dated 2026-11-23.
 
 | # | Decision | Implemented in |
 |---|---|---|
@@ -19,6 +19,7 @@ Entries 1 to 12 are dated 2026-11-22; entry 13 is dated 2026-11-23.
 | 11 | Rust (where present) is verified in CI only. | Not applicable: this repository has no Rust. |
 | 12 | The ten UI rules in `docs/ui-quality.md` are binding, and the `ui-ux-pro-max` and `unslop` skills are installed in the repository and used for UI work and for copy. | [`ui-quality.md`](ui-quality.md), `.claude/skills/ui-ux-pro-max/`, `.claude/skills/unslop/` |
 | 13 | Visual system: Pipenzo Flow look tokens ([docs/design-tokens.md](design-tokens.md)). SDLC kit version: jortega0033/sdlc-kit v1.0.0. (2026-11-23) | `algebra_notebook/static/tokens.css`, [`design-tokens.md`](design-tokens.md) |
+| 14 | Accent, focus, themes and linking rules for the design tokens (2026-11-23). D1 Current selection: the yellow accent is used for the primary action, the current-step marker and the current selection (UI rule 8). Decided by the owner on 2026-11-23. How (recommended by the orchestrator, adopted under the owner's delegation of the same day): a selection uses a solid --primary fill with --on-primary text (not only a yellow border, which has about 1.5:1 against white on light), plus a second sign that is not colour (weight, icon or text) and the existing aria attribute. Never a tint with a same-hue border and never a thick one-sided border. D2 Focus ring: --focus is a focus indicator, exempt from the accent limit, including where it is yellow in dark. A ticket that says the focus style stays unchanged means the rule on main after the token pull request. Recommended by the orchestrator, adopted under the owner's delegation of 2026-11-23. D3 Themes: contrast and no-colour-alone checks cover both the light and the dark block of tokens.css. Recommended by the orchestrator, adopted under the owner's delegation of 2026-11-23. D4 Linking: a ticket that creates a page or its static allowlist links tokens.css before any other stylesheet and serves it (allowlist and its test). Recommended by the orchestrator, adopted under the owner's delegation of 2026-11-23. D5 release-dependency-planner: while a plan is open only one yellow primary button shows; "New plan" (#new-plan) becomes neutral, in ticket #11. Recommended by the orchestrator, adopted under the owner's delegation of 2026-11-23. | [`design-tokens.md`](design-tokens.md) (D1 to D3); D4 and D5 apply in ticket work |
 
 ## Entry 10: decisions settled with the ticket default
 

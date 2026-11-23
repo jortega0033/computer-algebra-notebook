@@ -1,22 +1,26 @@
 # Design tokens
 
-The visual system is the Pipenzo "Flow look": a black page, Flow-style alpha layers, one accent (Pipenzo yellow `#FECE02`), red only for danger. Dark is the primary design.
+The visual system is the Pipenzo "Flow look": a black page, Flow-style alpha layers, one accent (Pipenzo yellow `#FECE02`), red only for danger. The accent marks the primary action, the current step and the current selection. Dark is the primary design.
 
 ## Source and resync
 
 - File: `algebra_notebook/static/tokens.css`, a byte-for-byte copy of `extension/sidepanel/tokens.css` in `jortega0033/clip-to-reel-studio` at commit `a13378ce73e5b27213c9a200fc960ec93afef054` (2026-11-21).
 - Resync: copy the file over `algebra_notebook/static/tokens.css`. Nothing else. Never edit the copy; change the source instead.
 - The header comment of the file holds the contrast rules. The tokens are already contrast-checked.
+- The header comment of `tokens.css` is narrower than this document: its yellow rule lists only the primary button, the current-step node, the turn chip and two dots, and it does not mention the current selection or the focus ring. This document takes precedence, because the copy must stay identical to the source and so the comment cannot be edited here.
 
 ## Rule
 
-New UI uses these tokens. No new colour literals in CSS or JavaScript. Yellow only on the primary action and the current-step marker. Text never sits on a bare alpha layer; use a solid surface token.
+New UI uses these tokens. No new colour literals in CSS or JavaScript. Yellow only on the primary action, the current-step marker and the current selection (rule 8 of [ui-quality.md](ui-quality.md)); the focus ring is a separate case (D2). Text never sits on a bare alpha layer; use a solid surface token.
 
 How this maps to this app, next to rule 8 of [ui-quality.md](ui-quality.md):
 
-- `--primary` (yellow) only on the primary action and the current-step marker. What the notebook's current-step marker is has not been decided by the owner: open, do not choose it in a ticket.
-- A selected cell or row uses `--state-selected` (a neutral layer), never yellow. Rule 8's "current selection" is met by that neutral state until the owner decides otherwise.
-- The focus ring uses `--focus`. It is yellow in dark and that is allowed: it is a focus indicator, not accent decoration.
+- `--primary` (yellow) only on the primary action, the current-step marker and the current selection. What the notebook's current-step marker is has not been decided by the owner: open, do not choose it in a ticket.
+- D1, current selection. The owner decided on 2026-11-23 that the yellow accent is used for the primary action, the current-step marker and the current selection. How it is drawn was recommended by the orchestrator and adopted under the owner's delegation of the same day: a selection is a solid `--primary` fill with `--on-primary` text, not only a yellow border (a yellow border has about 1.5:1 against white on light). It carries a second sign that is not colour (weight, an icon or text) and the existing `aria-selected` or `aria-current` attribute. Never a tint with a same-hue border and never a thick one-sided border.
+- D2, focus ring. `--focus` is a focus indicator and is exempt from the accent limit, including where it is yellow in dark. A ticket that says the focus style stays unchanged means the rule on main after the token pull request. This was recommended by the orchestrator and adopted under the owner's delegation of 2026-11-23.
+- D3, themes. Contrast and no-colour-alone checks cover both the light block and the dark block of `tokens.css`. This was recommended by the orchestrator and adopted under the owner's delegation of 2026-11-23.
+- `--state-selected` is a neutral layer. It may support a selected state (for example a hover or a secondary layer), but it does not meet D1 alone.
+- Status of the page: the notebook still marks selection in a neutral colour (`--state-selected`) where it does. The page follows in ticket work; this document does not claim it is done.
 
 ## Linking and serving
 
