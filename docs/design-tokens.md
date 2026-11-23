@@ -12,6 +12,22 @@ The visual system is the Pipenzo "Flow look": a black page, Flow-style alpha lay
 
 New UI uses these tokens. No new colour literals in CSS or JavaScript. Yellow only on the primary action and the current-step marker. Text never sits on a bare alpha layer; use a solid surface token.
 
+How this maps to this app, next to rule 8 of [ui-quality.md](ui-quality.md):
+
+- `--primary` (yellow) only on the primary action and the current-step marker. What the notebook's current-step marker is has not been decided by the owner: open, do not choose it in a ticket.
+- A selected cell or row uses `--state-selected` (a neutral layer), never yellow. Rule 8's "current selection" is met by that neutral state until the owner decides otherwise.
+- The focus ring uses `--focus`. It is yellow in dark and that is allowed: it is a focus indicator, not accent decoration.
+
+## Linking and serving
+
+- `index.html` links `static/tokens.css` with `<link rel="stylesheet">` placed before `app.css` (ticket #15).
+- `tokens.css` is on the static-file allowlist (#10, #14).
+- The static-asset scan covers it. It holds no http(s) URL, no `style=`, no `.style.` and no `cssText`, so it passes.
+
+## Fonts
+
+This repository ships no `fonts.css` and no font files, although the header of `tokens.css` mentions them. `--font` and `--font-display` resolve to local system fonts. Never load a web font from a CDN or Google Fonts; that breaks the offline and no-external-request rules and the #10 scan. Bundling font files needs an owner decision.
+
 ## Light and dark
 
 The `:root` block is the light theme. A `prefers-color-scheme: dark` block overrides it, so the operating system colour scheme decides. There is no manual switch.
