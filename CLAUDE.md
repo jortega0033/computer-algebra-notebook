@@ -14,7 +14,7 @@ An offline notebook for exact algebra in one real variable. A learner or develop
 |---|---|
 | Scope, grammar, acceptance, fixtures, batch order | [docs/PRD.md](docs/PRD.md) |
 | Runtime contract, exact algebra, plotting, persistence, fixtures | [docs/TECHNICAL_SPEC.md](docs/TECHNICAL_SPEC.md) |
-| Module map and contract freeze points (planned) | [docs/architecture.md](docs/architecture.md) |
+| Module map and contract freeze points (layout scaffolded, contracts planned) | [docs/architecture.md](docs/architecture.md) |
 | Ticket order and acceptance | epic [#1](https://github.com/jortega0033/computer-algebra-notebook/issues/1) and its children |
 
 If a document and a ticket disagree, stop and say so in the issue; do not pick silently. The fixtures in the technical spec are expected results, not observed ones. When a fixture first runs, record what the implementation actually printed.
