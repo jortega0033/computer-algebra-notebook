@@ -15,6 +15,7 @@ These ten rules are binding for every screen and every piece of user-facing copy
 
 ## How the rules are applied
 
+- Rule 8 is read with the Rule section of [design-tokens.md](design-tokens.md) and owner decision 14 in [owner-decisions.md](owner-decisions.md): the accent also marks the current step, and `--focus` is a focus indicator, exempt from the accent limit.
 - Colours, spacing, radii and type come from the tokens in `algebra_notebook/static/tokens.css`; see [design-tokens.md](design-tokens.md). New UI adds no colour literals.
 
 - A UI ticket starts with the `ui-ux-pro-max` skill (design-system search for the product type; run `python .claude/skills/ui-ux-pro-max/scripts/search.py` as its `SKILL.md` describes) and ends with a check of the changed screens against this page. Record the check in the pull request.
