@@ -11,22 +11,24 @@ The visual system is the Pipenzo "Flow look": a black page, Flow-style alpha lay
 
 ## Rule
 
-New UI uses these tokens. No new colour literals in CSS or JavaScript. Yellow only on the primary action, the current-step marker and the current selection (rule 8 of [ui-quality.md](ui-quality.md)); the focus ring is a separate case (D2). Text never sits on a bare alpha layer; use a solid surface token.
+New UI uses these tokens. No new colour literals in CSS or JavaScript. Yellow only on the primary action, the current-step marker and the current selection (rule 8 of [ui-quality.md](ui-quality.md)); the focus ring is a separate case (14-D2). Text never sits on a bare alpha layer; use a solid surface token.
 
 How this maps to this app, next to rule 8 of [ui-quality.md](ui-quality.md):
 
 - `--primary` (yellow) only on the primary action, the current-step marker and the current selection. What the notebook's current-step marker is has not been decided by the owner: open, do not choose it in a ticket.
-- D1, current selection. The owner decided on 2026-11-23 that the yellow accent is used for the primary action, the current-step marker and the current selection. How it is drawn was recommended by the orchestrator and adopted under the owner's delegation of the same day: a selection is a solid `--primary` fill with `--on-primary` text, not only a yellow border (a yellow border has about 1.5:1 against white on light). It carries a second sign that is not colour (weight, an icon or text) and the existing `aria-selected` or `aria-current` attribute. Never a tint with a same-hue border and never a thick one-sided border.
-- D2, focus ring. `--focus` is a focus indicator and is exempt from the accent limit, including where it is yellow in dark. A ticket that says the focus style stays unchanged means the rule on main after the token pull request. This was recommended by the orchestrator and adopted under the owner's delegation of 2026-11-23.
-- D3, themes. Contrast and no-colour-alone checks cover both the light block and the dark block of `tokens.css`. This was recommended by the orchestrator and adopted under the owner's delegation of 2026-11-23.
-- `--state-selected` is a neutral layer. It may support a selected state (for example a hover or a secondary layer), but it does not meet D1 alone.
-- Status of the page: the notebook still marks selection in a neutral colour (`--state-selected`) where it does. The page follows in ticket work; this document does not claim it is done.
+- 14-D1, current selection. The owner decided on 2026-11-23 that the yellow accent is used for the primary action, the current-step marker and the current selection. How it is drawn was recommended by the orchestrator and adopted under the owner's delegation of the same day: a selection is a solid `--primary` fill with `--on-primary` text, not only a yellow border (a yellow border has about 1.5:1 against white on light). It carries a second sign that is not colour (weight, an icon or text) and the existing aria attribute (the one the control already uses). For example `aria-selected`, `aria-current` or `aria-pressed`; no page exists yet, so the ticket that adds the control chooses the fitting one. Never a tint with a same-hue border and never a thick one-sided border.
+- 14-D2, focus ring. `--focus` is a focus indicator and is exempt from the accent limit, including where it is yellow in dark. A ticket that says the focus style stays unchanged means the rule on main after the token pull request. This was recommended by the orchestrator and adopted under the owner's delegation of 2026-11-23.
+- 14-D3, themes. Contrast and no-colour-alone checks cover both the light block and the dark block of `tokens.css`. This was recommended by the orchestrator and adopted under the owner's delegation of 2026-11-23.
+- `--state-selected` is a neutral layer and is not used to mark the current selection; a selection uses the solid `--primary` fill of 14-D1. Its inline comment in `tokens.css` ("selected row / segment fill") gives way to this document, as the header comment does.
+- Status of the page: there is no page yet. `algebra_notebook/static/` holds only the tokens; the page starts in ticket #15. Screens built in ticket work follow 14-D1 to 14-D3 from the start; this document does not claim any screen exists or follows them today.
+- The labels 14-D1 to 14-D5 are the ids of owner decision 14 in [owner-decisions.md](owner-decisions.md). They are separate from the ids D1 to D10 in its Entry 10 table.
 
 ## Linking and serving
 
-- `index.html` links `static/tokens.css` with `<link rel="stylesheet">` placed before `app.css` (ticket #15).
-- `tokens.css` is on the static-file allowlist (#10, #14).
-- The static-asset scan covers it. It holds no http(s) URL, no `style=`, no `.style.` and no `cssText`, so it passes.
+- 14-D4: a ticket that creates a page or its static allowlist links `tokens.css` before any other stylesheet and serves it (allowlist and its test). Recommended by the orchestrator, adopted under the owner's delegation of 2026-11-23.
+- `index.html` (ticket #15, not built yet) must link `static/tokens.css` with `<link rel="stylesheet">` before `app.css`.
+- The static-file allowlist (#10, #14, not built yet) must include `tokens.css`, and its test must cover it.
+- The static-asset scan (#10, #15, not built yet) must cover it. The file holds no http(s) URL, no `style=`, no `.style.` and no `cssText`, so it meets those checks.
 
 ## Fonts
 
