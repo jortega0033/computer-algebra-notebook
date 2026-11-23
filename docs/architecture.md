@@ -1,6 +1,6 @@
 # Implementer map
 
-**Planned, not implemented.** This page adds only what the product plan and technical specification leave open: where the code goes and where the contracts are frozen. It does not repeat their rules. Ticket #2 creates the first files and must correct this page to match what exists.
+**Scaffolded, not implemented.** The files below exist as stubs with a one-line responsibility; `static/` is empty. This page adds only what the product plan and technical specification leave open: where the code goes and where the contracts are frozen. It does not repeat their rules. Ticket #2 creates the first files and must correct this page to match what exists.
 
 Sources: [PRD](PRD.md), [technical specification](TECHNICAL_SPEC.md).
 

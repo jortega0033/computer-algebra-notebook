@@ -2,17 +2,17 @@
 
 The full repository instructions are in [CLAUDE.md](CLAUDE.md). This file repeats only what an agent needs before it reads that.
 
-The repository is planning-only: no code, no tests and no manifest yet. The commands below are planned and are introduced by ticket #2. Do not report them as passing before then.
+The repository is a scaffold: the package layout, the entry point and smoke tests exist, but no product behaviour. The run command is planned (ticket #14). Do not report it as passing before then.
 
-## Test commands (planned: ticket #2)
+## Test commands
 
 ```
 python -m unittest
 ```
 
-Run it from the repository root. Python 3.12 or newer, standard library only. There is no lint step, no build step and no package manifest. Do not add pip or npm dependencies.
+Run it from the repository root. Python 3.12 or newer, standard library only. `python -m algebra_notebook --help` prints the usage. There is no lint step, no build step and no package manifest. Do not add pip or npm dependencies.
 
-## Run (planned: ticket #2)
+## Run (planned: ticket #14)
 
 ```
 python -m algebra_notebook --data-dir ./notebook-data --port 8765
