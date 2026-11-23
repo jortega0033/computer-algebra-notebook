@@ -2,7 +2,7 @@
 
 Instructions for Claude Code and other coding agents working in this repository.
 
-**Status: planning only.** There is no application code, no test suite and no manifest yet. Every command below is planned and marked with the ticket that introduces it. Do not report a command as passing until the ticket that introduces it has merged and you have run it.
+**Status: scaffold only.** The package layout, the entry point (`--help` works), one smoke test per module and CI exist. There is no product behaviour yet: every module holds only its responsibility line, and starting the service exits with "not implemented yet: see #14". A command marked planned below is not real yet; do not report it as passing until the ticket that introduces it has merged and you have run it.
 
 ## Product
 
@@ -14,7 +14,7 @@ An offline notebook for exact algebra in one real variable. A learner or develop
 |---|---|
 | Scope, grammar, acceptance, fixtures, batch order | [docs/PRD.md](docs/PRD.md) |
 | Runtime contract, exact algebra, plotting, persistence, fixtures | [docs/TECHNICAL_SPEC.md](docs/TECHNICAL_SPEC.md) |
-| Module map and contract freeze points (planned) | [docs/architecture.md](docs/architecture.md) |
+| Module map and contract freeze points (layout scaffolded, contracts planned) | [docs/architecture.md](docs/architecture.md) |
 | Ticket order and acceptance | epic [#1](https://github.com/jortega0033/computer-algebra-notebook/issues/1) and its children |
 
 If a document and a ticket disagree, stop and say so in the issue; do not pick silently. The fixtures in the technical spec are expected results, not observed ones. When a fixture first runs, record what the implementation actually printed.
@@ -30,20 +30,21 @@ If a document and a ticket disagree, stop and say so in the issue; do not pick s
 - Platforms: develop on Windows, verify on Linux in CI. Use `pathlib`, no shell scripts in the product, no POSIX-only calls.
 - Everything written in this repository is in English. User-facing copy is plain and specific.
 
-## Commands (all planned)
+## Commands
 
 Run from the repository root. Use `python3` where `python` is not Python 3 (Linux).
 
 | Purpose | Command | Status |
 |---|---|---|
-| Run the test suite (standard `unittest`, no extras) | `python -m unittest` | planned: introduced by ticket #2 |
-| Start the service on loopback | `python -m algebra_notebook --data-dir ./notebook-data --port 8765` | planned: introduced by ticket #2 |
-| Open the bundled demo | click "Open demo" in the page at `http://127.0.0.1:8765/` | planned: introduced by ticket #2, extended by ticket #7 |
+| Run the test suite (standard `unittest`, no extras) | `python -m unittest` | works (smoke tests only; ticket #2 children add the real ones) |
+| Show the command line usage | `python -m algebra_notebook --help` | works |
+| Start the service on loopback | `python -m algebra_notebook --data-dir ./notebook-data --port 8765` | planned: starts in ticket #14; until then it exits non-zero with "not implemented yet" |
+| Open the bundled demo | click "Open demo" in the page at `http://127.0.0.1:8765/` | planned: introduced by ticket #15, extended by ticket #7 |
 | Clean-checkout check list | documented in `docs/verification.md` | planned: introduced by ticket #7 |
 
 There is no lint, format or build step. Do not add one without an owner decision.
 
-## Module boundaries (planned, see docs/architecture.md)
+## Module boundaries (files exist as stubs, see docs/architecture.md)
 
 Dependencies point downward only; a lower module never imports a higher one.
 
@@ -105,7 +106,7 @@ Each role's `description` ends with a "Use proactively ..." sentence, which is w
 - **Order:** local checks, then Code Reviewer and Reality Checker, then `gh pr create --draft`, then CI on the draft, then `gh pr ready` once CI is green and a comment on the issue with the CI run link. Work is done on leaf tickets only: a `tracking` parent is never picked, and the pull request of its last open sub-issue also says `Closes #<parent>`. After the draft pull request is pushed the session ends its turn with "Draft pull request #N is waiting for CI" and reads `gh pr checks` once when woken; it never polls. Acceptance steps that need a person go under "Owner checks" in the pull request.
 - **Review gate hook:** [`.claude/hooks/role_gate.py`](.claude/hooks/role_gate.py) blocks `gh pr create` and `gh pr ready` until both gate roles ran after the last code edit (documentation-only changes pass). `ROLE_GATE=off` in the environment Claude Code is started from switches it off for that session; only the owner does that.
 - **Permissions:** [`.claude/settings.json`](.claude/settings.json). Documented commands are allowed; force pushes, pushes to `main`, `gh pr merge`, releases and reads of `.env` are denied; edits to CI, agent configuration and Loop files ask first (anchored rules for the root and any-depth rules `**/.claude/...` so copies inside a ticket worktree ask too; edits made through a shell are not covered, so a ticket must not change agent configuration).
-- **CI:** [`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs `python -m unittest` and the gate self-test on Linux and Windows with Python 3.12 and 3.13. Until ticket #2 creates `algebra_notebook/__main__.py`, a temporary guard skips the test command; ticket #2 removes it. Every required check must be green before a pull request is marked ready.
+- **CI:** [`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs `python -m unittest` and the gate self-test on Linux and Windows with Python 3.12 and 3.13. Every required check must be green before a pull request is marked ready.
 - **Templates and labels:** [pull request template](.github/pull_request_template.md), [ticket template](.github/ISSUE_TEMPLATE/implementation-ticket.md). Ticket labels: `status:ready`, `status:blocked`, `status:in-progress`, `needs-decision`, `tracking` (a parent with sub-issues; never picked).
 - **Changelog:** every ticket pull request adds a line under `Unreleased` in [CHANGELOG.md](CHANGELOG.md).
 - **UI and writing quality:** [docs/ui-quality.md](docs/ui-quality.md) (ten binding rules); skills `ui-ux-pro-max` and `unslop` in `.claude/skills/`.

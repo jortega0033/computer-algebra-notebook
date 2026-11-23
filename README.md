@@ -1,6 +1,6 @@
 # Computer Algebra Notebook
 
-A planned offline project. Implementation has not started. The repository currently contains the product plan, technical specification and implementation backlog.
+A planned offline project. The repository contains the product plan, technical specification, implementation backlog and an empty code scaffold (`algebra_notebook/`, `tests/`). No product feature is implemented.
 
 ## Plan
 
@@ -10,7 +10,7 @@ A planned offline project. Implementation has not started. The repository curren
 
 ## Current status
 
-The fixtures describe expected results for future checks. No working baseline or passing implementation tests are claimed. Required runtime versions and offline dependencies must be checked before the first build.
+The fixtures describe expected results for future checks. `python -m unittest` runs smoke tests only (every module imports, `--help` works). No working baseline is claimed. Required runtime versions and offline dependencies must be checked before the first build.
 
 ## Licensing
 
