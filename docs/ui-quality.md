@@ -15,6 +15,8 @@ These ten rules are binding for every screen and every piece of user-facing copy
 
 ## How the rules are applied
 
+- Colours, spacing, radii and type come from the tokens in `algebra_notebook/static/tokens.css`; see [design-tokens.md](design-tokens.md). New UI adds no colour literals.
+
 - A UI ticket starts with the `ui-ux-pro-max` skill (design-system search for the product type; run `python .claude/skills/ui-ux-pro-max/scripts/search.py` as its `SKILL.md` describes) and ends with a check of the changed screens against this page. Record the check in the pull request.
 - User-facing copy, documentation and pull request text go through the `unslop` skill before the pull request is opened.
 - Frontend Developer, Accessibility Auditor and Code Reviewer name this page in their checklists. Enforcement is by the review gate (Code Reviewer on every ticket), not by a script. Rule 1 can be linted; rule 2 cannot be detected reliably from CSS.
