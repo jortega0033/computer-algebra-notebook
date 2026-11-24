@@ -37,3 +37,13 @@ This page is the record. The ticket plan copies the list into the "Open owner de
 | D8 | Diagnostic class of caps and unsupported forms | `limit` for exponent above 12, node cap and similar; `unsupported` for irrational quadratic roots and non-affine divisors; `domain` for division by constant zero | E21-7, #3, #4 |
 | D9 | Writes without an Origin header | Rejected | #2, E21-9 |
 | D10 | Licence | Not selected; no ticket adds a licence file; the owner decides separately and it blocks no ticket | none (blocks no ticket) |
+
+## Program decisions (owner, 2026-11-24)
+
+The owner accepted the goal and each suggestion below. They apply from the phase they name; the rules of `CLAUDE.md` hold for phase 1 as written.
+
+| Decision | Implemented in |
+|---|---|
+| The repository has a program goal above phase 1: a computer algebra system with checked steps, in six phases. | Program issue #28 |
+| The integration suite has its own licence. Suggested: check, fetch at a pinned version, commit none. | Program issue #28 |
+| Standard-library rule. Suggested: keep it; speed targets are relative to it. | Program issue #28 |
