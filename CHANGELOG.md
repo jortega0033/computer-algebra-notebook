@@ -6,4 +6,5 @@ All notable changes to this project are recorded here, in the [Keep a Changelog]
 
 ### Added
 
+- Program goal, score and phases 1 to 6 (#28).
 - Delivery tooling: continuous integration on Linux and Windows, the review gate hook, the `next-ticket` driver, pull request and issue templates, and the UI quality rules in `docs/ui-quality.md`.
